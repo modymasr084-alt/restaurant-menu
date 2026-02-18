@@ -1,10 +1,14 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 model Category {
@@ -20,27 +24,27 @@ model Category {
 }
 
 model MenuItem {
-  id            String   @id @default(cuid())
-  name          String
-  nameAr        String
-  description   String?
+  id          String   @id @default(cuid())
+  name        String
+  nameAr      String
+  description String?
   descriptionAr String?
-  price         Float
-  image         String?
-  categoryId    String
-  category      Category @relation(fields: [categoryId], references: [id])
-  isActive      Boolean  @default(true)
-  isAvailable   Boolean  @default(true)
-  sortOrder     Int      @default(0)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  price       Float
+  image       String?
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  isActive    Boolean  @default(true)
+  isAvailable Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Settings {
-  id              String   @id @default(cuid())
+  id          String   @id @default(cuid())
   restaurantName   String   @default("مطعم الذواقة")
   restaurantNameEn String   @default("Restaurant")
-  logo            String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  logo        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
